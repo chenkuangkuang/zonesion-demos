@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>综合下载demo</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/conmmon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/lab.js"></script>
+    <script>
+        $LAB.script("js/jquery.min.js").wait()
+        // 引入插件js-
+            .script("js/bootstrap.min.js")
+            .script("js/director.min.js")
+            .script("js/Vue.js")
+            .wait()
+            // 引入数据js
+            .script("js/WSN/camera-1.1.js")
+            .script("js/WSN/WSNCamera.js")
+            .script("js/WSN/WSNRTConnect.js")
+            .wait()
+            .script("js/user.js")
+    </script>
+</head>
+<body>
+    <div class="page">
+        <div class="header">
+            <h3 class="title">中智讯在线演示产品 - 2016</h3>
+            <ul class="nav">
+                <li class="header_active" id="planLi"><a href="#/plan">校企合作方案</a></li>
+                <li id="bulidLi"><a href="#/bulid">五维实验室建设</a></li>
+                <li id="displayLi"><a href="#/display">典型产品展示</a></li>
+                <li id="systemLi"><a href="#/system">智学云系统</a></li>
+                <li id="shopLi"><a href="#/shop">在线应用商城</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <div class="content_nav" data-route="plan">
+                <div class="sider">
+                    <ul class="sider_ul">
+                        <li id="discribeLi"><a href="#/plan/discribe">方案综述</a></li>
+                        <li id="trainLi"><a href="#/plan/train">人才培养</a></li>
+                        <li id="courseLi"><a href="#/plan/course">课程体系</a></li>
+                        <li id="environmentLi"><a href="#/plan/environment">教学环境</a></li>
+                        <li id="resourceLi"><a href="#/plan/resource">平台资源</a></li>
+                        <li id="educationLi"><a href="#/plan/education">协同育人</a></li>
+                    </ul>
+                </div>
+                <div class="sider_content">
+                    <div class="plan_content" data-route="discribe">
+                        <div id="carousel-example-generic" class="carousel sider" data-ride="carousel" style="width:90%;height: 80%;">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                            </ol>
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" role="listbox">
+                                <div class="item active">
+                                    <div class="item_content">
+                                        <ul class="item_ul">
+                                            <li class="item_ul_li">
+                                                <h3>高端就业</h3>
+                                                <img src="img/jiuye.png" alt="">
+                                                <p>校企合作人才培养模式下，高端人才（云才库）被中智讯及合作企业吸纳，每年缺口逾4000人</p>
+                                            </li>
+                                            <li class="item_ul_li">
+                                                <h3>科研合作</h3>
+                                                <img src="img/hezuo.png" alt="">
+                                                <p>高校建设自己的服务外包交付中心，以中智讯行业交付能力为基础，承接企业和自身项目</p>
+                                            </li>
+                                            <li class="item_ul_li">
+                                                <h3>创业孵化</h3>
+                                                <img src="img/fuhua.png" alt="">
+                                                <p>中智讯与政府、高校建立人才孵化中心，为高校人才创新创业提供创业导师及软硬件平台</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="carousel-caption">
+                                        协同育人
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="item_content">
+                                        <ul class="item_ul">
+                                            <li class="item_ul_li2">
+                                                <h3>在线云课堂</h3>
+                                                <img src="img/yunketang.png" alt="">
+                                            </li>
+                                            <li class="item_ul_li2">
+                                                <h3>在线云评测</h3>
+                                                <ul class="pingce_ul">
+                                                    <li>
+                                                        <img src="img/ceping1.png" alt="">
+                                                    </li>
+                                                    <li>
+                                                        <img src="img/ceping2.png" alt="">
+                                                    </li>
+                                                    <li>
+                                                        <img src="img/ceping3.png" alt="">
+                                                    </li>
+                                                    <li>
+                                                        <img src="img/ceping4.png" alt="">
+                                                    </li>
+                                                    <li>
+                                                        <img src="img/ceping5.png" alt="">
+                                                    </li>
+                                                    <li>
+                                                        <img src="img/ceping6.png" alt="">
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="item_ul_li2">
+                                                <h3>在线云项目</h3>
+                                                <ul class="projrect_ul">
+                                                    <li>
+                                                        <div class="project_shuli">在线课程</div>
+                                                        <img src="img/project1.png" alt="">
+                                                    </li>
+                                                    <li>
+                                                        <div class="project_shuli">行业案例</div>
+                                                        <img src="img/project2.png" alt="">
+                                                    </li>
+                                                    <li>
+                                                        <div class="project_shuli">技能题库</div>
+                                                        <img src="img/project3.png" alt="">
+                                                    </li>
+                                                    <li>
+                                                        <div class="project_shuli">技能排名</div>
+                                                        <img src="img/project4.png" alt="">
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                        <p class="ceping_p">通过校企合作，构建三大服务平台：课程共建、人才评测、在线实训，全面提升课程建设、能力评测、创新实践能力</p>
+                                    </div>
+                                    <div class="carousel-caption">
+                                        平台资源
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="item_content">
+                                        <ul class="item_ul learn_li">
+                                            <li>产学孵化实验室</li>
+                                            <li>智云物联物联网接入云平台</li>
+                                            <li>物联网数据接入大数据中心</li>
+                                            <li>物联网产学研横向项目</li>
+
+                                            <li>行业应用实验室</li>
+                                            <li>智能家居</li>
+                                            <li>智能农业</li>
+                                            <li>智慧养老</li>
+                                            <li>智能制造</li>
+                                            <li>智能仓储</li>
+                                            <li>智慧交通</li>
+
+                                            <li>创新创客实验室</li>
+                                            <li>物联网创新创意综合开发</li>
+                                            <li>智能硬件开发</li>
+                                            <li>人工智能开发</li>
+                                            <li>互联网+产品</li>
+
+                                            <li>工程实训实验室</li>
+                                            <li>物联网工程实训综合开发</li>
+                                            <li>物联网工程规划</li>
+                                            <li>物联网工程组网</li>
+                                            <li>物联网工程应用</li>
+
+                                            <li>基础教学实验室</li>
+                                            <li>嵌入式单片机传感器</li>
+                                            <li>RFID射频</li>
+                                            <li>机器人</li>
+                                            <li>物联网通信</li>
+
+                                        </ul>
+                                    </div>
+                                    <div class="carousel-caption">
+                                        教学环境
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="plan_content" data-route="train">人才培养</div>
+                    <div class="plan_content" data-route="course">课程体系</div>
+                    <div class="plan_content" data-route="environment">教学环境</div>
+                    <div class="plan_content" data-route="resource">平台资源</div>
+                    <div class="plan_content" data-route="education">协同育人</div>
+                </div>
+            </div>
+            <div class="content_nav" data-route="bulid">bulid</div>
+            <div class="content_nav" data-route="display">display</div>
+            <div class="content_nav" data-route="system">system</div>
+            <div class="content_nav" data-route="shop">shop</div>
+        </div>
+
+    </div>
+</body>
+</html>
