@@ -1,0 +1,174 @@
+.banner2{
+    margin-top: 110px;
+    width:1348px;
+}
+.case-content ul,.project-content ul{
+    _margin-left:0;
+}
+.case-content ul li{
+    line-height: 35px;
+    background: url("../images/case.png") no-repeat right center;
+}
+.case-content ul li a{
+    display: block;
+    width:650px;
+}
+.project-content ul li a,.case-content ul li a{
+    color:#444;
+}
+.project-content div a{
+    color:#DA251C;
+}
+.project-content ul li a:hover,.project-content div a:hover{
+    color:#DA251C;
+    text-decoration: underline;
+}
+.case-content ul li a:hover{
+    color:#DA251C;
+    font-weight: bold;
+    background: url("../images/case2.png") no-repeat right center;
+}
+.contact-content div img{
+    margin-bottom: 10px;
+}
+.contact-content .contact-content1{
+    font-size: 22px;
+    font-weight: bold;
+    padding-left: 50px;
+    color:#da251c;
+}
+.contact-content .contact-content-address{
+    background: url("../images/address1.png") no-repeat left center;
+}
+.contact-content .contact-content-phone{
+    background: url("../images/phone1.png") no-repeat left center;
+}
+#map{
+    height:300px;
+    width:650px;
+    float:left;
+    margin-left: 100px;
+    border:1px solid #bcbcbc;
+}
+#map #BMapLib_stationText0,#pnl_phone_left table tbody{
+    font-size:12px;
+}
+.news-position{
+    background: url("../images/position.png") no-repeat left center;
+    padding-left: 30px;
+}
+.signin{
+    width:800px;
+    margin-top: -20px;
+}
+.signin .signin-img{
+    width:700px;
+}
+.signin .signin-img img{
+    width:700px;
+}
+.signin .signin-content form{
+    width:400px;
+    height:200px;
+    margin-top: 20px;
+}
+.signin .signin-content form .sign-1,.signin .signin-content form .sign-2{
+    height:70px;
+    vertical-align: middle;
+}
+.signin .signin-content form span{
+    float:left;
+    width:98px;
+    line-height:28px;
+    font-size: 18px;
+}
+.sign-1 input,.sign-2 input{
+    width:298px;
+    height:28px;
+    float: right;
+    padding-left: 10px;
+}
+.sign-1 input:focus,.sign-2 input:focus{
+    outline: none;
+    box-shadow: 0 0 8px rgba(103, 166, 217,1);
+}
+.submit-btn{
+    width:80px;
+    background: #d09120;
+    cursor: no-drop;
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+    position: relative;
+    transition: all 0.2s;
+    overflow: hidden;
+}
+.submit-btn1{
+    color: #fff;
+    margin-left: 100px;
+}
+.submit-btn2{
+    background: none;
+    color: #f30;
+    margin-left: 60px;
+}
+.submit-btn:after{
+    content: '';
+    position: absolute;
+    z-index: -1;
+    transition: all 0.2s;
+    width: 100%;
+    height: 0;
+    top: 50%;
+    left: 50%;
+    background: #da251c;/*幕布颜色*/
+    color:#f33;
+    opacity: 0;
+    -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    -moz-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    -ms-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    transform: translateX(-50%) translateY(-50%) rotate(45deg);
+}
+.submit-btn:hover{
+    color: #fff;
+    font-weight: bolder;
+    background: none;
+}
+.submit-btn:hover:after{
+    height: 190%;
+    opacity: 0.9;/*这个是下拉动作*/
+}
+.news-head h3,.news-head h6{
+   line-height: 50px;
+    text-align: center;
+}
+.news-head h6{
+    color:#888;
+}
+.news-middle{
+    color:#444;
+    margin-bottom: 30px;
+}
+.news-middle .pages{
+    margin-left:250px;
+}
+.news-middle a,.news-middle span{
+    margin-right: 10px;
+    color:#222 !important;
+    font-weight: bolder;
+}
+.news-middle a:link{
+    text-decoration: underline;
+}
+.news-bottom{
+    margin-top: 10px;
+}
+.news-bottom .news-btn2{
+    float:right;
+}
+.news-bottom a{
+    color:#DA251c;
+}
+.news-bottom .news-btn1{
+    float:left;
+}

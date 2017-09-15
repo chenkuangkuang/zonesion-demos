@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta charset="UTF-8">
+    <meta name="applicable-device"content="pc,mobile"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">-->
+    <title>老人看护系统</title>
+    <link rel="stylesheet" href="css/reset.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-select.css"/>
+    <link rel="stylesheet" href="css/switchery.min.css">
+    <link rel="stylesheet" href="css/jquery.nstSlider.css">
+    <link rel="stylesheet" href="css/jquery-editable-select.css">
+    <link rel="stylesheet" href="css/bootstrap-switch.css"/>
+    <link rel="stylesheet" href="css/DateTimePicker.css">
+    <link rel="stylesheet" href="css/basic.css"/>
+    <script src="js/lab.js"></script>
+    <script>
+        $LAB.script("js/jquery.min.js").wait()
+                // 引入插件js-
+                .script("js/jquery.circliful.min.js")
+                .script("js/bootstrap.min.js")
+                .script("js/director.min.js")
+                .script("js/switchery.min.js")
+                .script("js/jquery.nstSlider.min.js")
+                .script("js/qrcode.js")
+                .script("js/DateTimePicker.js")
+                .script("js/bootstrap-switch.js")
+                .script("js/raphael-2.1.4.min.js")
+                .script("js/justgage.js")
+                .wait()
+                // 引入数据js
+                .script("js/WSN/camera-1.1.js")
+                .script("js/WSN/WSNCamera.js")
+                .script("js/WSN/WSNRTConnect.js")
+                .script("js/config.js")
+                .wait()
+//                .script("js/user.js")
+                .script("js/script.js?v=170422")
+    </script>
+</head>
+<body>
+
+<div class="title">
+    <ul class="title-ul">
+        <!--<li class="set-li"></li>-->
+        <li class="home-tab" id="healthLi"><a href="#/health" >健康保健</a></li>
+        <li class="home-tab" id="homeLi"><a href="#/home" >生活指南</a></li>
+        <li class="control-tab" id="controlLi"><a href="#/control/elec">家居控制</a></li>
+        <li class="secures-tab" id="securesLi"><a href="#/secures">防护安全</a></li>
+    </ul>
+    <div class="set-div">
+        <a href="" data-toggle="modal" data-target="#myModal"> <i class="iconfont">&#xe61a;</i></a>
+    </div>
+    <div class="title-time">
+        <span class="time" id="time_info">08:51</span><br/><span class="date" id="date_info">03月13日</span>
+    </div>
+</div>
+
+<div class="state-bar">
+    <div class="switch-div">
+        <input class="switch-size switch" id="mode_switch" type="checkbox" name="my-checkbox" checked data-size="normal">
+    </div>
+    <span class="bar-state" id="barState">
+        <i class="iconfont alarm-light alarm-light-online" id="alarmLight">&#xe67f;</i>
+        异常播报：
+    </span>
+    <marquee id="affiche" class="bar-state-info" align="middle" behavior="scroll" loop="-1" direction="top"  scrollamount="3" scrolldelay="100"
+             onMouseOut="this.start()" onMouseOver="this.stop()" ><span id="marquee_default">暂无异常</span><span class="alarm_gas hidden">燃气异常</span><span class="alarm_fire hidden">明火</span><span class="alarm_body hidden">异常人体</span><span class="alarm_window hidden">窗磁异常</span><span class="alarm_emergency hidden">紧急按钮启动</span></marquee>
+    <span class="bar-title pull-right">老人看护</span>
+</div>
+
+<div class="main ">
+    <!--健康-->
+    <div class="health hidden" id="health">
+        <div class="health-show health  " id="health_show">
+            <div class="hin hin-bodytem " >
+                <span class="hin-title">体温</span>
+                <div class="hin-state text-danger" id="bodytempLink">离线</div>
+                <div class="myStat" id="tempChart"  ></div>
+                <span class="hin-bottom">参考值：36.0-37.3℃ <span class="hin-level"></span></span>
+            </div>
+            <div class="hin hin-heart hin-top" >
+                <span class="hin-title">心率</span>
+                <div class="hin-state text-danger" id="heartLink">离线</div>
+                <div class="myStat" id="heartChart" ></div>
+                <span class="hin-bottom">参考值：60-100bpm<span class="hin-level"></span></span>
+            </div>
+            <div class="hin hin-blood " >
+                <span class="hin-title">血压</span>
+                <div class="hin-state text-danger" id="bloodLink">离线</div>
+                <div class="myStat" id="blood1Chart" ></div>
+                <div class="myStat" id="blood2Chart"  ></div>
+                <span class="hin-bottom">参考值：60-90（舒张压） 90-140（收缩压）<span class="hin-level"></span></span>
+            </div>
+            <div class="hin hin-camera camera-div flex" id="hin_camera" onmouseover="page.camera_show(this)" onmouseout="page.camera_hide(this)">
+                <img src="img/camera.jpg" alt="" class="camera-img cameraBlock1"/>
+                <img src="img/camera.jpg" alt="" class="camera-img cameraBlock2"  id="homeCameraImg"/>
+                <div class="camera-info flex hidden" id="camera_info">
+                    <div class="control-direc">
+                        <table id="direcTable"  class="camera-table">
+                            <tr>
+                                <td width="5vw"><button class="direc direc_top up hidden2">上</button></td>
+                                <td width="5vw"><button class="direc direc_top up" id="up" onclick="camera.up(1)">上</button></td>
+                                <td width="5vw"><button class="direc direc_top up hidden2">上</button></td>
+                            </tr>
+                            <tr>
+                                <td width="5vw"><button class="direc direc_top left" id="left" onclick="camera.left(1)">左</button></td>
+                                <td width="5vw"><button class="direc power" id="power" data-name="homeCameraSet" data-state=0 data-switchCam=0 data-camState=0 onclick="camera.switch(this, 1)">开关</button></td>
+                                <td width="5vw"><button class="direc direc_top right" id="right" onclick="camera.right(1)">右</button></td>
+                            </tr>
+                            <tr>
+                                <td width="5vw"><button class="direc direc_top up hidden2">上</button></td>
+                                <td width="5vw"><button class="direc direc_bottom bottom" id="down"  onclick="camera.down(1)">下</button></td>
+                                <td width="5vw"><button class="direc direc_top up hidden2">上</button></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="control-mode">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-primary horizontal zoom"  id="horizontal" disabled onclick="camera.horizontal(1)"><i class="iconfont zoom-icon zoom-icon-horizontal"  >&#xe8fa;</i>&nbsp;左右巡航</button>
+                            <button type="button" class="btn btn-primary vertical zoom"  id="vertical" disabled   onclick="camera.vertical(1)"><i class="iconfont zoom-icon">&#xe8fa;</i>&nbsp;上下巡航</button>
+                        </div><br/>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-primary overall zoom"  id="overall" disabled   onclick="camera.overall(1)"><i class="iconfont zoom-icon zoom-i-overall">&#xe6d2;</i>&nbsp;全局巡航</button>
+                            <button type="button" class="btn btn-primary photo zoom"  id="photo" disabled   onclick="camera.photo(1)"><i class="iconfont zoom-icon">&#xe6f9;</i>&nbsp;立即拍照</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hin hin-user" >
+                <span class="hin-title">当前对象</span>
+                <div class="user-div">
+                    <img class="user-img pull-left user-img" id="userImg1" src="img/woman.png" onclick="health.getUserHis()"  alt=""/>
+                    <div class="user-right pull-right">
+                        <span class="hin-name user-name" id="showUserName">--</span>
+                        <span class="hin-name user-sex" id="showUserSex">-</span>
+                        <span class="hin-name user-age" id="showUserAge">--</span>
+                    </div>
+                </div>
+                <span class=" his-btn">点击头像查看更多信息</span>
+            </div>
+        </div>
+        <div class="health-his hidden" id="health_his">
+            <a  class="img-back" href="javascript:void(0)" onclick="page.toPage('#health_his', '#health_show')"><i class="iconfont">&#xe612;</i></a>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                <img class="his-img user-img" src="img/woman.png" id="userImg2"  data-toggle="modal"  data-target="#userModal" alt="" style="width:0;"/>
+                                    <span class="his-text user-name" id="userName">--</span>
+                                    <span class="his-text user-sex" id="userSex">-</span>
+                                    <span class="his-text user-age" id="userAge">-</span>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <select class="form-control his-control" id="hisSelect">
+                                    <option value="0">体温</option>
+                                    <option value="1">心率</option>
+                                    <option value="2">舒张压</option>
+                                    <option value="3">收缩压</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <button id="HistoryDisplay" class="btn btn-primary query-btn his-control" onclick="health.getHisChart()">查询</button>
+                            </div>
+                        </div>
+                    <div class="his-chart" id="hisChart"></div>
+            </div>
+                <span class="his-tips"> * 仅查询最近20次历史数据</span>
+             </div>
+        </div>
+    </div>
+    <!--首页-->
+    <div class="home hidden" id="home">
+            <div class="hin hin-tem" id="hin_tem">
+                <span class="hin-title">温度</span>
+                <img class="hin-img" src="img/tem.png" alt=""/>
+                <span><span id="tem_val">--</span>℃</span>
+                <div class="hin-state text-danger" id="tem_state">离线</div>
+            </div>
+            <div class="hin hin-humi">
+                <span class="hin-title">湿度</span>
+                <img class="hin-img"  src="img/humi.png" alt=""/>
+                <span class="humi-span"><span id="humi_val">--</span>%</span>
+                <div class="hin-state text-danger" id="humi_state">离线</div>
+            </div>
+            <div class="hin hin-illu">
+                <span class="hin-title">光照度</span>
+                <img class="hin-img"  src="img/illu2.png" alt=""/>
+                <span><span id="illu_val">--</span>lux</span>
+                <div class="hin-state text-danger"  id="illu_state">离线</div>
+            </div>
+            <div class="hin hin-PM">
+                <span class="hin-title">PM</span>
+                <img class="hin-img"  src="img/PM2.5-2.png" alt=""/>
+                <span><span >PM1.0：</span><span id="PM_val1">---</span>μg/m3</span>
+                <span><span>PM2.5：</span><span id="PM_val2">---</span>μg/m3</span>
+                <span><span>PM10：</span><span id="PM_val3">---</span>μg/m3</span>
+                <div class="hin-state text-danger" id="PM_state">离线</div>
+            </div>
+            <div class="hin hin-socket hin-CO2">
+                <img class="hin-img"  class="hin-img"  src="img/CO2.png" alt=""/>
+                <span class="hin-title">CO2</span>
+                <span><span id="CO2_val">---</span>&nbsp;ppm</span>
+                <div class="hin-state text-danger"  id="CO2_state">离线</div>
+            </div>
+            <div class="hin hin-wind">
+                <img class="hin-img"  src="img/wind.png" alt=""/>
+                <span class="hin-title">风速</span>
+                <span><span id="windspeed_val">---&nbsp;</span>m/s</span>
+                <div class="hin-state text-danger"  id="wind_state">离线</div>
+            </div>
+            <div class="hin hin-weather" onclick="page.getWeather()">
+                <span class="hin-title">天气及资讯</span>
+                <div class="weather-left pull-left flex">
+                    <div class="weather-img">
+                        <img id="weatherImg" src="img/weather.png" alt="" onclick="page.getWeather()"/>
+                    </div>
+                    <div><strong id="weatherTxt">--</strong> <span id="weatherRange">-~-℃</span>
+                        <br/>
+                        <span id="weatherWind">-</span></div>
+                </div>
+                <div class="weather-right pull-right flex">
+                    <span><strong>感冒环境预测</strong>：<span id="weatherCold">-</span></span>
+                    <span> <strong>出行建议：</strong><span id="weatherOut">-</span></span>
+                    <span><a href="http://www.jkshhao.com/287">二十四节气养生常识与注意事项</a></span>
+                    <span><a href="https://www.ys137.com/yanglao/1523733.html">适合中老年人运动的八大方式</a></span>
+                    <!--href="javascript:void(0)" -->
+                    <a class="weather-more" data-toggle="modal" data-target="#weatherModal">更多资讯</a>
+                </div>
+            </div>
+    </div>
+    <!--控制-->
+    <div class="control hidden" id="control">
+        <!--控制页：导航-->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="control-li active" id="elecLi"><a href="#/control/elec"><i class="iconfont">&#xe607;</i>&nbsp;<span>电器开关</span></a></li>
+            <li role="presentation" class="control-li " id="controllerLi"><a href="#/control/controller"><i class="iconfont">&#xe653;</i>&nbsp;<span>红外遥控</span></a></li>
+            <li role="presentation" class="control-li " id="sceneLi"><a href="#/control/scene" ><i class="iconfont">&#xe605;</i>&nbsp;<span>智能场景</span></a></li>
+            <!--<li role="presentation" class="control-li " id="elecLi"><a href="#/control/elec" ><i class="iconfont">&#xe646;</i>&nbsp;<span>默认配置</span></a></li>-->
+        </ul>
+        <!-- 控制页：内容页-->
+        <div class="tab-content">
+            <!--控制页：灯光控制-->
+            <div class="light pane-info control elec" id="elec">
+                <div class="light-bottom light-half flex control-div control-rgb">
+                    <div style="width:100%;">
+                        <i class="iconfont  r-i con-rgb con-rgb-off" id="rgbIcon" data-toggle="modal" data-target="#rgbModal" data-title="curRGB">&#xe678;</i>
+                    </div>
+                    <span class="elec-title">RGB灯</span>
+                    <input type="checkbox" class="switch-btn switch-rgb" id="switch_rgb" data-title="off"  onchange="control.switch_rgb(this)"/>
+                </div>
+                <div class="light-up light-half flex control-div">
+                    <div class="lamp control-div">
+                        <img src="img/lamp_off.png" class="ring-img con-i  con-off " alt=""/>
+                        <span class="elec-title">客厅灯</span>
+                        <input type="checkbox" class="switch-btn switch-lamp" id="switch_lamp"   data-title="off"  onchange="control.lamp(this)"/>
+                    </div>
+                </div>
+                <div class="humidifier control-div elec-ring">
+                    <img src="img/humidifier_off.png" class="ring-img con-i con-off elec-con" alt=""/>
+                    <span class="elec-title">加湿器</span>
+                    <input type="checkbox" class="switch-btn switch-humidifier" id="switch_humidifier" data-title="off"  onchange="control.humidifier(this)"/>
+                </div>
+                <div class="lamp control-div">
+                    <img src="img/washingmachine_off.png" class="ring-img con-i con-off elec-con" alt=""/>
+                    <span class="elec-title">洗衣机</span>
+                    <input type="checkbox" class="switch-btn switch-lamp" id="switch_washingmachine"   data-title="off"  onchange="control.washingmachine(this)"/>
+                </div>
+                <div class="lamp control-div">
+                    <img src="img/fridge_off.png" class="ring-img con-i con-off elec-con" alt=""/>
+                    <span class="elec-title">电冰箱</span>
+                    <input type="checkbox" class="switch-btn switch-lamp" id="switch_fridge"   data-title="off"  onchange="control.fridge(this)"/>
+                </div>
+                <div class="fan control-div">
+                    <img class="con-i con-off" id="fan" src="img/fan_off2.png" alt=""/>
+                    <span class="elec-title">风扇</span>
+                    <input type="checkbox" class="switch-fan" id="switch_fan" data-title="off"  onchange="control.fan(this)"/>
+                </div>
+                <div class="curtain  control-div">
+                    <img class="con-i con-off"  id="curtainImg" src="img/curtain_off.png" alt=""/>
+                    <span class="elec-title">窗帘</span>
+                    <input type="checkbox" class="switch-fan" id="switch_curtain" data-title="off"  onchange="control.curtain(this)"/>
+                </div>
+
+                <div class="add control-div">
+                    <img class="elec-add ring-img" id="elecAdd" src="img/add.png" data-toggle="modal" data-target="#newModal" data-type="elec" />
+
+                    <div class="add-txt elec-title">更多电器……</div>
+                    <input type="checkbox" class="switch-btn switch-other hidden" id="otherElec" data-title="off"  onchange="control.otherElec(this)"/>
+                </div>
+            </div>
+            <!--控制页：场景-->
+            <div class="socket pane-info hidden scene" id="scene">
+                <input class="switch-size switch switch-mode" id="scene_switch" type="checkbox" name="my-checkbox" checked data-size="normal">
+                <div class="sins" id="sins" >
+                    <div class="sin" data-title="sin-homein"><span>默认模式</span></div>
+                    <div class="sin sin-care" data-title="sin-care" id="homeout"><span>关爱模式</span></div>
+                    <div class="sin sin-birthday" data-title="sin-birthday"><span>生日模式</span></div>
+                    <div class="sin sin-more" id="sinAdd" data-toggle="modal" data-target="#newModal" data-type="scene" data-title="add"><span>新增模式</span></div>
+                </div>
+                <div class="sin-info sin-info-bg hidden text-center" id="sinInfoBg">
+
+                    <span class="scene-name scene-name-bg" >默认模式</span>
+
+                    <a  class="img-back" href="javascript:void(0)"onclick="page.toPage('#sinInfoBg', '#sins')"><i class="iconfont">&#xe612;</i></a>
+
+                    <div id="container" class="container" style="">
+                        <div class="sin-times">
+                            <span class="time-txt time-sleep"  onclick="scene.chartClick('睡眠')">睡眠—</span>
+                            <span id="onWork" class="icon iconfont time-btn on-work" data-field="time" >08:00</span><span class="time-txt time-out" onclick="scene.chartClick('出门')">—出门—</span>
+                            <span id="outWork" class="icon iconfont time-btn out-work" data-field="time" >19:00</span><span class="time-txt time-in" onclick="scene.chartClick('在家')">—在家—</span>
+                            <span id="sleep" class="icon iconfont time-btn sleep" data-field="time" >23:00</span><span class="time-txt time-sleep" onclick="scene.chartClick('睡眠')">—睡眠</span>
+                        </div>
+                    </div>
+
+                    <div class="sin-home-uls">
+                        <ul class="sin-c sin-c1">
+                            <li class="sin-ci sin-set" data-toggle="modal" data-target="#sceneModal" data-title="fan">风扇</li>
+                            <li class="sin-ci">洗衣机</li>
+                            <li class="sin-ci sin-set"  data-toggle="modal" data-target="#rgbModal" data-title="RGB">RGB灯</li>
+                        </ul>
+                        <br/>
+                        <br/>
+                        <ul class="sin-c sin-c2">
+                            <li class="sin-ci sin-set" data-toggle="modal" data-target="#sceneModal" data-title="humidifier">加湿器</li>
+                            <li class="sin-ci">冰箱</li>
+                        </ul>
+                        <br/>
+                        <br/>
+                        <ul class="sin-c sin-c3">
+                            <li class="sin-ci">燃气</li>
+                            <li class="sin-ci">火焰</li>
+                            <li class="sin-ci sin-set" data-toggle="modal" data-target="#sceneModal" data-title="curtain">窗帘</li>
+                        </ul>
+                        <br/>
+                        <br/>
+                        <ul class="sin-c sin-c4">
+                            <li class="sin-ci">报警灯</li>
+                            <li class="sin-ci">人体红外</li>
+                            <li class="sin-ci">窗磁</li>
+                            <!--<li class="sin-ci">自动拍照</li>-->
+                        </ul>
+                    </div>
+                </div>
+                <div class="sin-info hidden text-center" id="sinInfo">
+                    <a  class="img-back" href="javascript:void(0)"onclick="page.toPage('#sinInfo', '#sins')"><i class="iconfont">&#xe612;</i></a>
+                    <a  class="img-del-scene" data-toggle="modal" data-target="#delModal" data-type="scene"><i class="iconfont">&#xe6d3;</i></a>
+                    <span class="scene-name" id="sceneName"></span>
+                    <div class="sin-info-cs" id="sin_info_cs">
+                        <ul class="sin-c sin-c1">
+                            <li class="sin-cc sin-set" data-toggle="modal" data-target="#sceneModal" data-title="fan">风扇</li>
+                            <li class="sin-cc">洗衣机</li>
+                            <li class="sin-cc sin-set" data-toggle="modal" data-target="#rgbModal" data-title="RGB">RGB灯</li>
+                        </ul>
+                        <ul class="sin-c sin-c2">
+                            <li class="sin-cc sin-set" data-toggle="modal" data-target="#sceneModal" data-title="humidifier">加湿器</li>
+                            <li class="sin-cc">冰箱</li>
+                            <li class="sin-cc">一键报警</li>
+                        </ul>
+                        <ul class="sin-c sin-c3">
+                            <li class="sin-cc">燃气</li>
+                            <li class="sin-cc">火焰</li>
+                            <li class="sin-cc sin-set" data-toggle="modal" data-target="#sceneModal" data-title="curtain">窗帘</li>
+                        </ul>
+                        <ul class="sin-c sin-c4">
+                            <li class="sin-cc">报警灯</li>
+                            <li class="sin-cc">人体红外</li>
+                            <li class="sin-cc">窗磁</li>
+                            <!--<li class="sin-cc sin-set" data-toggle="modal" data-target="#sceneModal" data-title="photo">自动拍照</li>-->
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <!--控制页：红外遥控-->
+            <div class="controller pane-info hidden" id="controller">
+                <div class="controller-info" id="controller_info">
+                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-center modalCol controller-bg">
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 modalCol text-center">
+                        <div class="form-group controller-groups">
+                            <div class="btn-group filter-mode">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="current-mode"  id="currentMode">遥控模式</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li onclick="control.toggle_controller_mode()"><a  class="other-mode" id="other_controller_mode">学习模式</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="caret invisible"></span></li>
+                                </ul>
+                            </div>
+                            <!--<a href="javascript:void(0)" class="controller-set" >-->
+                                <i class="iconfont" data-toggle="modal" data-target="#modeModal" data-type="learn-mode">&#xe61a;</i>
+                            <!--</a>-->
+                        </div>
+                        <table id="control_table" class="mode_table">
+                            <tr>
+                                <td id="mode-1"><span class="id-letter">1</span><span class="mode_txt" ></span></td>
+                                <td id="mode-2"><span class="id-letter">2</span><span class="mode_txt" ></span></td>
+                                <td id="mode-3"><span class="id-letter">3</span><span class="mode_txt" ></span></td>
+                                <td id="mode-C"><span class="id-letter">C</span><span class="mode_txt" ></span></td>
+                            </tr>
+                            <tr>
+                                <td id="mode-4"><span class="id-letter">4</span><span class="mode_txt" ></span></td>
+                                <td id="mode-5"><span class="id-letter">5</span><span class="mode_txt" ></span></td>
+                                <td id="mode-6"><span class="id-letter">6</span><span class="mode_txt" ></span></td>
+                                <td id="mode-D"><span class="id-letter">D</span><span class="mode_txt" ></span></td>
+                            </tr>
+                            <tr>
+                                <td id="mode-7"><span class="id-letter">7</span><span class="mode_txt" ></span></td>
+                                <td id="mode-8"><span class="id-letter">8</span><span class="mode_txt" ></span></td>
+                                <td id="mode-9"><span class="id-letter">9</span><span class="mode_txt" ></span></td>
+                                <td id="mode-E"><span class="id-letter">E</span><span class="mode_txt" ></span></td>
+                            </tr>
+                            <tr>
+                                <td id="mode-0"><span class="id-letter">0</span><span class="mode_txt" ></span></td>
+                                <td id="mode-A"><span class="id-letter">A</span><span class="mode_txt" ></span></td>
+                                <td id="mode-B"><span class="id-letter">B</span><span class="mode_txt" ></span></td>
+                                <td id="mode-F"><span class="id-letter">F</span><span class="mode_txt" ></span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--安防-->
+    <div class="secures hidden" id="secures">
+        <div class="secures-tabs secures-alarm text-center" id="secure_show">
+            <div class="secure-four">
+                <!--燃气-->
+                <div class="secure-div gas text-center con-bg-off  " id="gas" title="燃气"><i class="iconfont">&#xe68c;</i></div>
+                <!--火焰-->
+                <div class="secure-div fire con-bg-off  text-center" id="fire" title="火焰"><i class="iconfont">&#xe60c;</i></div>
+                <!--人体红外-->
+                <div class="secure-div body con-bg-off  text-center" id="body" title="人体红外"><i class="iconfont">&#xe6dd;</i></div>
+                <!--窗磁-->
+                <div class="secure-div window con-bg-off  text-center" id="window" title="窗磁"><i class="iconfont">&#xe60b;</i></div>
+                <!--紧急按钮-->
+                <div class="secure-div window con-bg-off  text-center" id="emergency" title="紧急按钮"><i class="iconfont">&#xe643;</i></div>
+                <!--点击进入合法id、报警历史列表-->
+                <div class="secure-div alarm-more text-center" id="alarm_his" title="合法ID" onclick="page.toPage('#secure_show', '#secure_his')"><i class="iconfont">&#xe60b;</i></div>
+            </div>
+            <div class="secure-bottom flex">
+                <!--<h3>安防摄像头</h3>-->
+                <div class="secures-camera flex camera-div"  id="camera"  onmouseover="page.camera_show(this)" onmouseout="page.camera_hide(this)">
+                    <!--<img src="img/camera.png" alt="" class="camera-img" id="secureCameraImg"/>-->
+                    <img src="img/camera.jpg" alt="" class="camera-img cameraBlock1"/>
+                    <img src="img/camera.jpg" alt="" class="camera-img cameraBlock2"  id="secureCameraImg"/>
+                    <div class="camera-info flex hidden" id="camera_info2">
+                        <div class="control-direc">
+                            <table id="direcTable2" class="camera-table">
+                                <tr>
+                                    <td></td>
+                                    <td><button class="direc direc_top up" id="up2"  onclick="camera.up(2)">上</button></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><button class="direc direc_top left" id="left2"   onclick="camera.left(2)">左</button></td>
+                                    <td><button class="direc power" id="power2" data-state=0 data-switchCam=0 data-camState=0 data-name="secureCameraSet" onclick="camera.switch(this, 2)">开关</button></td>
+                                    <td><button class="direc direc_top right" id="right2"   onclick="camera.right(2)">右</button></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><button class="direc direc_bottom bottom" id="down2"   onclick="camera.down(2)">下</button></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="control-mode">
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" class="btn btn-primary horizontal zoom"  id="horizontal2" disabled   onclick="camera.horizontal(2)"><i class="iconfont zoom-icon zoom-icon-horizontal">&#xe8fa;</i>&nbsp;左右巡航</button>
+                                <button type="button" class="btn btn-primary vertical zoom"  id="vertical2" disabled   onclick="camera.vertical(2)"><i class="iconfont zoom-icon">&#xe8fa;</i>&nbsp;上下巡航</button>
+                            </div><br/>
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" class="btn btn-primary overall zoom"  id="overall2" disabled   onclick="camera.overall(2)"><i class="iconfont zoom-icon zoom-i-overall">&#xe6d2;</i>&nbsp;全局巡航</button>
+                                <button type="button" class="btn btn-primary photo zoom"  id="photo2" disabled   onclick="camera.photo(2)"><i class="iconfont zoom-icon">&#xe6f9;</i>&nbsp;立即拍照</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lock secure-lock control-div flex">
+                    <img class="con-i con-off"  id="lockImg" src="img/lock_off.png" alt=""/>
+                    <br/>
+                    <span class="elec-title">门锁</span>
+                    <br/>
+                    <input type="checkbox" class="switch-fan" id="switch_lock" data-title="off"  onchange="control.lock(this)"/>
+                </div>
+            </div>
+        </div>
+        <div class="secures-tabs hidden " id="secure_his">
+            <div class="secures-tables">
+                <ul class="nav nav-tabs nums-tabs">
+                    <li class="localid-tab active"><a href="#localidTab" data-toggle="tab">合法ID列表</a></li>
+                    <li class="rfidhis-tab"><a href="#rfidhisTab" data-toggle="tab" id="rfidhistabs">刷卡历史</a></li>
+                    <li class="warn-tab"><a href="#warnTab" data-toggle="tab" id="warntabs">异常报警历史</a></li>
+                </ul>
+                <div class="tab-content flex">
+                    <div class="tab-pane fade in active" id="localidTab">
+                        <table class="table table-striped table-hover" id="rfidTable">
+                            <thead class="">
+                            <th onclick="control.selectall(this)"><input class="selectall" type="checkbox"  /></th><th>姓名</th><th>性别</th><th>卡号</th><th>操作</th>
+                            </thead>
+                            <tr>
+                                <td><input type="checkbox"/></td>
+                                <td class="name">王小虎</td><td class="sex">男</td><td class="rfid">A9C3F735</td>
+                                <td class="actionTd"><a class="edit-id" href="#" data-toggle="modal" data-target="#editModal" data-type="rfid">编辑</a></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"/></td>
+                                <td class="name">张文兰</td><td class="sex">女</td><td class="rfid">34A100DE</td>
+                                <td class="actionTd"><a class="edit-id" href="#" data-toggle="modal" data-target="#editModal" data-type="rfid">编辑</a></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"/></td>
+                                <td class="name">徐冰</td><td class="sex">男</td><td class="rfid">00FA43B5</td>
+                                <td class="actionTd"><a class="edit-id" href="#"data-toggle="modal" data-target="#editModal" data-type="rfid">编辑</a></td>
+                            </tr>
+                        </table>
+
+
+                        <div class="secure-btns">
+                            <button type="button" class="btn btn-default num-btn"data-toggle="modal" data-target="#delModal" data-type="rfid">删除</button>
+                            <button type="button" class="btn btn-primary num-btn" id="rfidAdd" data-toggle="modal" data-target="#newModal" data-type="rfid">添加</button>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="warnTab">
+                        <div class="warn-table-div">
+                            <table class="table table-striped warn-table" id="warnTable">
+                                <thead>
+                                <th>异常装置</th>
+                                <th>报警状态</th>
+                                <th>报警时间</th>
+                                </thead>
+                                <tr>
+                                    <td class="warn-name">人体红外</td>
+                                    <td class="warn-state">检测到异常人体</td>
+                                    <td class="warn-time">2017年5月3日-17:00</td>
+                                </tr>
+                                <tr>
+                                    <td class="warn-name">燃气感应器</td>
+                                    <td class="warn-state">检测到燃气泄露</td>
+                                    <td class="warn-time">2017年5月3日-17:00</td>
+                                </tr>
+                                <tr>
+                                    <td class="warn-name">火焰感应器</td>
+                                    <td class="warn-state">检测到明火</td>
+                                    <td class="warn-time">2017年5月3日-17:00</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="secure-btns">
+                            <!--<input type="text" class="form-control test-input pull-left"  placeholder="模拟异常报警，请填写异常的传感器" onblur="secure.test_warning(this.value)"/>-->
+                            <button type="button" class="btn btn-danger num-btn"data-toggle="modal" data-target="#clearModal" data-clear="alarm">一键清空</button>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="rfidhisTab">
+                        <table class="table table-striped rfidhistory-table" id="historyIdTable">
+                            <thead><tr><th>id</th><th>姓名</th><th>性别</th><th>时间</th><th>已拍照地址</th></tr></thead>
+                            <tbody>
+                            <tr><td>0D69CFF0</td><td>王小虎</td><td>男</td><td>2016年11月22日 16:12</td><td><a href="#" data-href="http://a.zhiyun360.com:1001/tmpfs/auto.jpg?-usr=admin&-pwd=admin&14827187246080.591860486044651" data-toggle="modal" data-target="#imgShowModal">点击查看照片</a></td></tr>
+                            <tr><td>DE04E374</td><td>张文兰</td><td>女</td><td>2016年12月02日 16:12</td><td><a href="#" data-href="http://a.zhiyun360.com:1001/tmpfs/auto.jpg?-usr=admin&-pwd=admin&14827187246080.591860486044651" data-toggle="modal" data-target="#imgShowModal">点击查看照片</a></td></tr>
+                            <tr><td>00FA43B5</td><td>徐冰</td><td>男</td><td>2016年12月24日 16:12</td><td><a href="#" data-href="http://a.zhiyun360.com:1001/tmpfs/auto.jpg?-usr=admin&-pwd=admin&14827187246080.591860486044651" data-toggle="modal" data-target="#imgShowModal">点击查看照片</a></td></tr>
+                            </tbody>
+                        </table>
+                        <div class="secure-btns">
+                            <!--<input type="text" class="form-control test-input pull-left"  placeholder="模拟刷卡" onblur="secure.test_rfid(this.value)"/>-->
+                            <button type="button" class="btn btn-danger num-btn"data-toggle="modal" data-target="#clearModal" data-clear="rfid">一键清空</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a  class="img-back" href="javascript:void(0)" id="rfidhistoryBack" onclick="page.toPage('#secure_his', '#secure_show')"><i class="iconfont">&#xe612;</i></a>
+        </div>
+        <!--<div class="hidden rfidhistory-info" id="rfidhistoryInfo">-->
+
+        <!--</div>-->
+    </div>
+
+</div>
+
+<!--时间设置层-->
+<div id="dtBox"></div>
+<!--/时间设置层-->
+
+<!--模态框：id信息编辑窗口-->
+<div class="modal fade imgModal" id="userModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">编辑用户信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="curName" class="col-sm-3 control-label">姓名</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="curName" data-related="userName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="curAge" class="col-sm-3 control-label">年龄</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="curAge" >
+                        </div>
+                    </div>
+                    <div class="form-group" id="currentSexGroup">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" class="cur-sex" id="curSex1" value="男" checked>男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" class="cur-sex" id="curSex2" value="女"> 女
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="checkIdSpan"> </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="currentConfirm" onclick="health.saveUser()">确认</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--天气及资讯窗口-->
+<div class="modal fade thresholdModal weather-modal" id="weatherModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">更多资讯</h4>
+            </div>
+            <div class="modal-body">
+                <strong>感冒指数： </strong><span id="weatherColdTxt">各项气象条件适宜，发生感冒机率较低。但请避免长期处于空调房间中，以防感冒。</span>
+                <br/><br/>
+                <strong>运动指数：</strong><span id="weatherSportTxt">天气较好，无雨水困扰，但考虑气温很高，请注意适当减少运动时间并降低运动强度，运动后及时补充水分。</span>
+                <br/><br/>
+                <strong>紫外线强度指数：</strong><span id="weatherRaysTxt">属中等强度紫外线辐射天气，外出时建议涂擦SPF高于15、PA+的防晒护肤品，戴帽子、太阳镜。</span>
+                <hr/>
+                <a href="http://www.jkshhao.com/287">二十四节气养生常识与注意事项</a>
+                <br/>
+                <a href="https://www.ys137.com/yanglao/1523733.html">适合中老年人运动的八大方式</a>
+                <br/>
+                <a href="http://www.cndzys.com/zhongyi/yaoshan/961249.html">9款养生粥做法与功效</a>
+                <br/>
+                <a href="http://shipin.people.com.cn/n/2014/1216/c85914-26218010.html">春吃花夏吃叶 冬天多吃根</a>
+            </div>
+            <!--<div class="modal-footer">-->
+                <!--<button class="btn btn-warning btn-save"  data-dismiss="modal">关闭</button>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+
+<!--场景模式下，RGB颜色设置窗口-->
+<div class="modal fade RGBModal" id="rgbModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">编辑RGB信息</h4>
+            </div>
+            <div class="modal-body" onclick="scene.setRGB(event)">
+                <div class="rgb-cs" id="rgbColorSet">
+                    <div class="rgb-c rgb-set-c r-red" id="rgb_set_red">红</div>
+                    <div class="rgb-c rgb-set-c  r-green" id="rgb_set_green">绿</div>
+                    <div class="rgb-c rgb-set-c  r-orange" id="rgb_set_orange">橙</div>
+                    <div class="rgb-c rgb-set-c  r-yellow" id="rgb_set_yellow">黄</div>
+                    <div class="rgb-c rgb-set-c  r-pink" id="rgb_set_pink">粉</div>
+                    <div class="rgb-c rgb-set-c  r-purple" id="rgb_set_purple">紫</div>
+                    <div class="rgb-c rgb-set-c  r-blue" id="rgb_set_blue">浅蓝</div>
+                    <div class="rgb-c rgb-set-c  r-white" id="rgb_set_white">白</div>
+                </div>
+                <div class="btn-group rgb-modes " role="group" aria-label="...">
+                    <button class="btn rgb-set-c  btn-rgb-switch" id="rgb_set_switch" data-title="off" >开启</button>
+                    <button class="btn rgb-set-c rgb-mode-set" id="rgb_set_flash" >慢闪</button>
+                    <button class="btn rgb-set-c  rgb-mode-set" id="rgb_set_strobe" >快闪</button>
+                    <button class="btn rgb-set-c  rgb-mode-set" id="rgb_set_fade">显隐</button>
+                    <button class="btn rgb-set-c  rgb-mode-set" id="rgb_set_smooth" >平滑</button>
+                </div>
+                <br/>
+                <br/>
+                <br/>
+                <div class="modal-footer">
+                    <button class="btn btn-warning btn-save" id="RGB_save" onclick="scene.saveRGB()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--设置项-->
+<div class="modal fade set-modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="qrDiv" class=" block-center qr-div hidden">
+                <span class="text-center text-danger">请在对应窗口点击扫码</span>
+            </div>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <ul id="myTab" class="nav nav-tabs ">
+                    <li class="active"><a href="#IDKEY" data-toggle="tab">ID与KEY</a></li>
+                    <li><a href="#mac" data-toggle="tab">mac地址</a></li>
+                    <li><a href="#homeCameraSet" data-toggle="tab" id="homeCameraTab">家居摄像头</a></li>
+                    <li><a href="#secureCameraSet" data-toggle="tab" id="secureCameraTab">安防摄像头</a></li>
+                    <li><a href="#jmeter" data-toggle="tab">版本信息</a></li>
+                </ul>
+            </div>
+            <div class="modal-body">
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade in active" id="IDKEY">
+                        <div class="idkey-div">
+                            <div class="input-group input-id">
+                                <span class="input-group-addon" id="id_span">ID</span>
+                                <input type="text" class="form-control" placeholder="" id="id_address" >
+                            </div>
+                            <br/>
+                            <div class="input-group  input-id">
+                                <span class="input-group-addon">KEY</span>
+                                <input type="text" class="form-control" placeholder="" id="key_address">
+                            </div>
+                            <br/>
+                            <div class="input-group  input-id  key-group">
+                                <span class="input-group-addon">服务器</span>
+                                <input type="text" class="form-control"  id="server_address">
+                            </div>
+                            <br/>
+                        </div>
+                        <div class="modal-in-footer">
+                            <button type="button" class="btn btn-primary modal_confirm" id="id_confirm" onclick="modal.saveIDKEY()">确认</button>
+                            <button type="button" class="btn btn-default modal_scan" id="scan" data-scan="id" onclick="modal.scan(this)">扫码</button>
+                            <button type="button" class="btn btn-default modal_share" id="id_share" data-share="id" onclick="modal.share(this)"><i class="iconfont">&#xe628;</i>&nbsp;<span id="idShareSpan">分享</span></button>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="mac">
+                        <div class="mac-in">
+                            <div class="input-group">
+                                <span class="input-group-addon">温湿度</span>
+                                <input type="text" class="form-control" id="type_002">
+                            </div>
+                            <br/>
+                            <div class="input-group">
+                                <span class="input-group-addon">光照度</span>
+                                <input type="text" class="form-control" id="type_001">
+                            </div><br/>
+                            <div class="input-group">
+                                <span class="input-group-addon">PM传感器</span>
+                                <input type="text" class="form-control"  id="type_102">
+                            </div><br/>
+                            <div class="input-group">
+                                <span class="input-group-addon">燃气</span>
+                                <input type="text" class="form-control" id="type_005">
+                            </div><br/>
+                            <div class="input-group">
+                                <span class="input-group-addon">火焰</span>
+                                <input type="text" class="form-control" id="type_104">
+                            </div><br/>
+                            <div class="input-group">
+                                <span class="input-group-addon">人体红外</span>
+                                <input type="text" class="form-control" id="type_004">
+                            </div><br/>
+                            <div class="input-group">
+                                <span class="input-group-addon">窗磁</span>
+                                <input type="text" class="form-control" id="type_026">
+                            </div><br/>
+                            <div class="input-group">
+                                <span class="input-group-addon">遥控</span>
+                                <input type="text" class="form-control" id="type_100">
+                            </div><br/>
+                            <div class="input-group">
+                                <span class="input-group-addon">LED</span>
+                                <input type="text" class="form-control" id="type_003">
+                            </div><br/>
+                            <div class="input-group">
+                                <span class="input-group-addon">能耗</span></span>
+                                <input type="text" class="form-control" id="type_801">
+                            </div><br/>
+                            <div class="input-group">
+                                <span class="input-group-addon">门禁</span>
+                                <input type="text" class="form-control" id="type_802">
+                            </div><br/>
+                            <div class="input-group">
+                                <span class="input-group-addon">声光报警</span>
+                                <input type="text" class="form-control" id="type_008">
+                            </div><br/>
+                            <div class="input-group">
+                                <span class="input-group-addon">风扇</span>
+                                <input type="text" class="form-control" id="type_007">
+                            </div><br/>
+                            <div class="input-group">
+                                <span class="input-group-addon">继电器组</span>
+                                <input type="text" class="form-control" id="type_810">
+                            </div><br/>
+                            <div class="input-group">
+                                <span class="input-group-addon">步进电机</span>
+                                <input type="text" class="form-control" id="type_851">
+                            </div><br/>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade camera-tabpane" id="homeCameraSet">
+                        <div class="camera-set-div">
+                            <div class="input-group  input-id" >
+                                <span class="input-group-addon" style="padding: 0;" >地址</span>
+                                <input type="text" class="form-control camera_addr" id="home_camera_addr" >
+                            </div>
+                            <br/>
+                            <div class="input-group input-id"  >
+                                <span class="input-group-addon" style="padding: 0;">类型</span>
+                                <input type="text" class="form-control camera_type" id="home_camera_type"  >
+                            </div>
+                            <br/>
+                            <div class="input-group  input-id"  >
+                                <span class="input-group-addon" style="padding: 0;">用户名</span>
+                                <input type="text" class="form-control camera_user" id="home_camera_user"  >
+                            </div>
+                            <br/>
+                            <div class="input-group  input-id camera-group"  >
+                                <span class="input-group-addon" style="padding: 0;">密码</span>
+                                <input type="text" class="form-control camera_pw" id="home_camera_pw"  >
+                            </div>
+                            <br/>
+                        </div>
+                        <div class="modal-in-footer">
+                            <button type="button" class="btn btn-primary modal_confirm"  onclick="modal.saveCamera(this)">确认</button>
+                            <button type="button" class="btn btn-default modal_scan" data-scan="home_camera" onclick="modal.scan(this)" >扫码</button>
+                            <button type="button" class="btn btn-default modal_share" data-share="home_camera"  onclick="modal.share(this)"><i class="iconfont">&#xe628;</i><span id="homeShareSpan">分享</span></button>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade camera-tabpane" id="secureCameraSet">
+                        <div class="camera-set-div">
+                            <div class="input-group  input-id" >
+                                    <span class="input-group-addon" style="padding: 0;" >地址</span>
+                                    <input type="text" class="form-control camera_addr" id="secure_camera_addr"  >
+                            </div>
+                            <br/>
+                            <div class="input-group input-id"  >
+                                <span class="input-group-addon" style="padding: 0;">类型</span>
+                                <input type="text" class="form-control camera_type" id="secure_camera_type" >
+                            </div>
+                            <br/>
+                            <div class="input-group  input-id"  >
+                                <span class="input-group-addon" style="padding: 0;">用户名</span>
+                                <input type="text" class="form-control camera_user"  id="secure_camera_user" >
+                            </div>
+                            <br/>
+                            <div class="input-group  input-id camera-group"  >
+                                <span class="input-group-addon" style="padding: 0;">密码</span>
+                                <input type="text" class="form-control camera_pw" id="secure_camera_pw" >
+                            </div>
+                            <br/>
+                        </div>
+                        <div class="modal-in-footer">
+                            <button type="button" class="btn btn-primary modal_confirm"  style="width: 8vw;" onclick="modal.saveCamera(this)">确认</button>
+                            <button type="button" class="btn btn-default modal_scan" data-scan="secure_camera" onclick="modal.scan(this)"  style="width: 8vw;">扫码</button>
+                            <button type="button" class="btn btn-default modal_share" style="width: 8vw;"  data-share="secure_camera" onclick="modal.share(this)"><i class="iconfont">&#xe628;</i><span id="secureShareSpan">分享</span></button>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade version-tabpane" id="jmeter">
+                        <a  class="hin-set download-set" id="download" title="hide" onclick="modal.share(this)"><i class="iconfont">&#xe640;</i></a>
+                        <div class="download-div hidden" id="downloadDiv">
+                        </div>
+                        <p class="text-center">当前版本：<span class="text-red">v1.0.170907</span></p>
+                        <div class="form-group row">
+                            <div class="col-lg-offset-4 col-md-offset-4 col-sm-offset-3 col-xs-offset-3 col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                                <button id="setUp" type="button" class="btn btn-danger btn-block">版本升级</button>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-offset-4 col-md-offset-4 col-sm-offset-3  col-xs-offset-3 col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                                <button type="button" class="btn btn-info btn-block" id="showUpdateTxt" data-toggle="collapse" data-target="#updateTxt">查看版本日志</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="updateTxt" class="collapse">
+                                <div><b>V1.0.170907</b>&nbsp;&nbsp;&nbsp;&nbsp;验证config.js，添加退出确认等</div>
+                                <br/>
+                                <div><b>V1.0.170829</b>&nbsp;&nbsp;&nbsp;&nbsp;添加返回键退出，修复几个小问题</div>
+                                <br/>
+                                <div><b>V1.0.170826</b>&nbsp;&nbsp;&nbsp;&nbsp;完成初版</div>
+                                <br/>
+                                <div class="text-center">
+                                    <button class="btn btn-default" onclick="page.clearLocalStorage()" style="margin:0 auto;display: block;">清除localStorage</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--新增窗口-->
+<div class="modal fade newModal" id="newModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">新增 <b id="newTitle"></b> 信息</h4>
+            </div>
+            <div class="modal-body new-modal-body">
+                <form class="form-horizontal hidden" role="form" id="new-scene-form">
+                    <div class="form-group">
+                        <label for="newSceneName" class="col-sm-3 control-label">模式名称&nbsp;<span class="required">*</span></label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control new-name" id="newSceneName" placeholder="例如：默认、离家、旅行、聚会、睡眠" name="name">
+                        </div>
+                    </div>
+                </form>
+                <form class="form-horizontal hidden" role="form" id="new-elec-form">
+                    <div class="form-group">
+                        <label for="newElecName" class="col-sm-3 control-label">电器名称&nbsp;<span class="required">*</span></label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control new-name" id="newElecName" placeholder="洗衣机、电冰箱、洗碗机……" name="name">
+                        </div>
+                    </div>
+                </form>
+                <form class="form-horizontal hidden" role="form" id="new-rfid-form">
+                    <div class="form-group">
+                        <label for="newRfidName" class="col-sm-3 control-label">姓名</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="newRfidName" name="name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="newRfidId" class="col-sm-3 control-label">卡号</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="newRfidId" name="rfid">
+                        </div>
+                    </div>
+                    <div class="form-group" id="newSexGroup">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <label class="radio-inline">
+                                <input type="radio" name="sex" id="newSex1" value="男" checked>男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="sex" id="newSex2" value="女"> 女
+                            </label>
+                        </div>
+                    </div>
+                </form>
+                <form class="form-horizontal hidden" role="form" id="new-phone-form">
+                    <div class="form-group">
+                        <label for="newPhoneName" class="col-sm-3 control-label">姓名</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="newPhoneName" name="name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPhone" class="col-sm-3 control-label">电话</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="newPhone" name="phone">
+                        </div>
+                    </div>
+                </form>
+                <div class="checkIdSpan"></div>
+            </div>
+            <div class="modal-footer">
+                <div class="check-span pull-left text-danger" id="checkAdd"></div>
+                <button type="button" class="btn btn-danger btn_confirm" id="newConfirm" onclick="modal.add(this)">确认</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--编辑窗口-->
+<div class="modal fade newModal" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">编辑<b id="editTitle"></b> 信息</h4>
+            </div>
+            <div class="modal-body new-modal-body">
+                <form class="form-horizontal hidden" role="form" id="edit-rfid-form">
+                    <div class="form-group">
+                        <label for="editRfidName" class="col-sm-3 control-label">姓名</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="editRfidName" name="name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editRfidId" class="col-sm-3 control-label">卡号</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="editRfidId" name="rfid">
+                        </div>
+                    </div>
+                    <div class="form-group" id="editSexGroup">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <label class="radio-inline">
+                                <input class="rfidSex" type="radio" name="sex" id="editSex1" value="男" checked>男
+                            </label>
+                            <label class="radio-inline">
+                                <input class="rfidSex" type="radio" name="sex" id="editSex2" value="女"> 女
+                            </label>
+                        </div>
+                    </div>
+                </form>
+                <form class="form-horizontal hidden" role="form" id="edit-phone-form">
+                    <div class="form-group">
+                        <label for="editPhoneName" class="col-sm-3 control-label">姓名</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="editPhoneName" name="name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPhone" class="col-sm-3 control-label">电话</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="editPhone" name="phone">
+                        </div>
+                    </div>
+                </form>
+                <div class="checkIdSpan"></div>
+            </div>
+            <div class="modal-footer">
+                <div class="check-span pull-left" id="checkEdit"></div>
+                <button type="button" class="btn btn-danger btn_confirm" id="editConfirm" onclick="modal.edit(this)">确认</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--删除窗口-->
+<div class="modal fade imgModal" id="delModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">删除确认：</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row text-center">
+                    <div class="col-md-8 col-md-offset-2" id="delBigInfo">
+                        <div id="bigInfo">确认删除 <b id="delInfo"></b> 吗？</div>
+                        <div class="hidden" id="bigInfoNull">未选中任何删除信息！</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="delConfirm" onclick="modal.del(this)">确认</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--遥控学习模式窗口-->
+<div class="modal fade newModal" id="modeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">学习模式</h4>
+            </div>
+            <div class="modal-body new-modal-body text-center">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <div class="col-md-offset-1 col-sm-offset-1 col-lg-offset-1 col-xs-offset-1 col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <!--<input type="text" class="form-control new-name" id="newElecName" placeholder="例如：洗衣机、电冰箱、洗碗机……" name="name">-->
+                            <select class="form-control mode-key "  id="modeKey" style="" name="name" onchange="control.selecter(this.value)">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="0">0</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                                <option value="F">F</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <input type="text" class="form-control new-name" id="modeTxt" placeholder="例如：开空调、开电视等" name="name">
+                        </div>
+                    </div>
+                </form>
+                <br/>
+                <br/>
+                <p class="text-muted">填写说明：选择遥控键值，然后输入键值对应的功能</p>
+                <div class="checkIdSpan"></div>
+            </div>
+            <div class="modal-footer">
+                <b class="check-span pull-left text-danger" id="checkMode"></b>
+                <button type="button" class="btn btn-danger btn_confirm" id="modeConfirm" onclick="modal.addMode(this)">确认</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--清空报警状态历史窗口-->
+<div class="modal fade imgModal" id="clearModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">清空确认：</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row text-center">
+                    <div class="col-md-8 col-md-offset-2" >
+                        <div>确认清空 <span id="clear_cur_span">警报</span>历史吗？（将保留第一行的数据）</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="clearConfirm" onclick="modal.clear(this)">确认</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--历史id信息图片窗口-->
+<div class="modal fade imgShowModal" id="imgShowModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4>当前链接照片</h4>
+            </div>
+            <div class="modal-body">
+                <div class=" text-center">
+                    <div id="showDiv">
+                        <img id="showImg" src="img/snapshot.jpg" alt=""/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!--场景模式阈值设置窗口-->
+<div class="modal fade thresholdModal" id="sceneModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">正在编辑&nbsp;<b id="sceneTitle"></b>&nbsp;- &nbsp;<b id="sceneElecTitle"></b>&nbsp;阈值信息</h4>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-center text-warning">设置当前<span id="scene_info_title">&nbsp;&nbsp;&nbsp;</span></h4>
+                <br/>
+                <div class="scene_info_mess">
+                    <span class="scene_info_span scene_info_left" id="scene_info_left">开</span>
+                    <span class="scene_info_span scene_info_right" id="scene_info_right">关</span>
+                    <!--<span class="">&nbsp;</span>-->
+                </div>
+                <br/>
+                <div class="nstSlider hidden" id="nstSliderS" data-range_min="0" data-range_max="200"
+                     data-cur_min="0"  data-cur_max="200">
+                    <div class="highlightPanel" id="highlightPanel1"></div>
+                    <div class="bar" id="barS"></div>
+                    <div class="leftGrip" id="leftGripS"></div>
+                    <div class="rightGrip" id="rightGripS"></div>
+                    <div class="leftLabel nstSlider-val" id="leftLabelS" ></div>
+                    <div class="rightLabel nstSlider-val" id="rightLabelS"></div>
+                </div>
+                <div class="nstSlider hidden" id="nstSliderS2" data-range_min="0" data-range_max="200"
+                     data-cur_min="200"  data-cur_max="0">
+                    <!--<div class="highlightPanel"></div>-->
+                    <div class="bar" id="barS2"></div>
+                    <div class="leftGrip" id="leftGripS2"></div>
+                    <div class="leftLabel nstSlider-val" id="leftLabelS2" ></div>
+                    <div class="rightLabel nstSlider-val" id="rightLabelS2" ></div>
+                </div>
+                <!--<p class="text-center threshold-tips">选中滑块，可用方向键调节大小。</p>-->
+                <button class="btn btn-warning btn-save" id="scene_threshold_save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--场景模式切换确认窗口-->
+<div class="modal fade imgModal" id="sceneSetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">信息确认：</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row text-center">
+                    <div class="col-md-8 col-md-offset-2" >
+                        <div >确认设置为：<b id="setSceneTitle"></b> 吗？</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger"  onclick="scene.setScene(this)">确认</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--刷卡信息模态框-->
+<div class="modal fade imgModal" id="rfidModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">刷卡信息：</h4>
+            </div>
+            <div class="modal-body">
+                <div class="rfid-mass text-center">	<span id=rfid_message class="rfid-mass">
+                    欢迎您！王小虎
+                </span></div>
+            </div>
+            <div class="modal-footer">
+                <!--<input type="text" id="i_card" />-->
+                <!--<input type="button" id="b_card" value="刷卡"/>-->
+                <button type="button" class="btn btn-danger btn_delete"  data-dismiss="modal">确认</button>
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--模态框：确认退出-->
+<div class="modal fade imgModal back-modal" id="backModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false"  data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
+                <h4 class="modal-title back-text" >确定退出程序？</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="confirm_back" onclick="confirm_back()">确认</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--延时弹出小框-->
+<div id="toast">
+	<span id="toast_txt">
+	</span>
+</div>
+</body>
+</html>
