@@ -1,0 +1,50 @@
+
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1478048955'); /* IE9*/
+  src: url('iconfont.eot?t=1478048955#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1478048955') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1478048955') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1478048955#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-shezhi:before { content: "\e61f"; }
+.icon-fenxiang:before { content: "\e620"; }
+.icon-xiuranqizao:before { content: "\e60d"; }
+.icon-wenduji:before { content: "\e600"; }
+.icon-fengsuruo:before { content: "\e612"; }
+.icon-wendu:before { content: "\e61d"; }
+.icon-luyouqi:before { content: "\e60e"; }
+.icon-caidan:before { content: "\e614"; }
+.icon-shuiweijiance:before { content: "\e609"; }
+.icon-xieya:before { content: "\e615"; }
+.icon-shuiwendeng:before { content: "\e60a"; }
+.icon-caidan1:before { content: "\e616"; }
+.icon-id:before { content: "\e61e"; }
+.icon-xinlv:before { content: "\e601"; }
+.icon-icon4:before { content: "\e602"; }
+.icon-icon9:before { content: "\e603"; }
+.icon-dianbiao:before { content: "\e619"; }
+.icon-shidutongji:before { content: "\e604"; }
+.icon-guangzhaoqiangdu:before { content: "\e608"; }
+.icon-fengxiang:before { content: "\e613"; }
+.icon-caidan2:before { content: "\e617"; }
+.icon-icontw:before { content: "\e60b"; }
+.icon-fanmishidu:before { content: "\e61a"; }
+.icon-fanmichuanganqi:before { content: "\e60f"; }
+.icon-shexiangtou:before { content: "\e605"; }
+.icon-sensor-PM25:before { content: "\e606"; }
+.icon-sensor-co2:before { content: "\e607"; }
+.icon-caidan3:before { content: "\e618"; }
+.icon-shujuguanlisvg69:before { content: "\e60c"; }
+.icon-rfid:before { content: "\e61b"; }
+.icon-jinjianniu:before { content: "\e610"; }
+.icon-chaodianbiao:before { content: "\e61c"; }
+.icon-hot:before { content: "\e611"; }
